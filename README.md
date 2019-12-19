@@ -22,7 +22,7 @@ As simple as:
 hiorco samples.tsv
 ```
 
-You can download our example here: [samples.tsv](https://github.com/cdanielmachado/HiOrCo/blob/master/example/samples.tsv), and check the documentation for more options and details:
+You can download our example here: [samples.tsv](https://github.com/cdanielmachado/HiOrCo/raw/master/example/samples.tsv), and check the documentation for more options and details:
 
 ```
 hiorco -h
