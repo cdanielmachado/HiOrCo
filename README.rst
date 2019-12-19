@@ -24,9 +24,7 @@ As simple as:
 
    hiorco samples.tsv
 
-You can download our example here:
-`samples.tsv <https://github.com/cdanielmachado/HiOrCo/raw/master/example/samples.tsv>`__,
-and check the documentation for more options and details:
+Check the documentation for more options and details:
 
 ::
 
