@@ -1,3 +1,5 @@
 .vscode/*
 *.pyc
 hiorco.egg-info/*
+build/*
+dist/*

@@ -19,8 +19,7 @@ setup(
     author_email='cdanielmachado@gmail.com',
     python_requires='>=3.6',
     classifiers=[
-        'Development Status :: 1 - Alpha',
-        'Intended Audience :: Developers',
+        'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3.6',
