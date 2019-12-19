@@ -6,6 +6,17 @@ from numpy.random import choice, seed
 from datetime import datetime
 from scipy.stats import binom
 from statsmodels.stats.multitest import fdrcorrection
+from functools import partial
+
+
+def evaluate(rows, data):
+    x = data.loc[rows,:]
+    total = x.min(axis=0).sum()
+    n_samples = data.shape[1]
+    probability = (x.sum(axis=1) / n_samples).prod()
+    expected = n_samples * probability
+    p_value = 1 - binom.cdf(total, n_samples, probability)
+    return total, expected, p_value
 
 
 def compute(data, k=2, n=10, p=100, part_size=100, abundance_cutoff=0.001, min_samples=10, 
@@ -14,22 +25,19 @@ def compute(data, k=2, n=10, p=100, part_size=100, abundance_cutoff=0.001, min_s
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
+    print(f"Inital dataset: {data.shape[0]} species, {data.shape[1]} samples.", flush=True)
+
     data = data / data.sum(axis=0) 
     data = (data > abundance_cutoff).astype(int)
     data = data.loc[data.sum(axis=1) >= min_samples, data.sum(axis=0) > 1]
 
-    def evaluate(rows):
-        x = data.loc[rows,:]
-        total = x.min(axis=0).sum()
-        n_samples = data.shape[1]
-        probability = (x.sum(axis=1) / n_samples).prod()
-        expected = n_samples * probability
-        p_value = 1 - binom.cdf(total, n_samples, probability)
-        return total, expected, p_value
+    print(f"Processed data: {data.shape[0]} species, {data.shape[1]} samples.", flush=True)
 
     combinations = []
     species = list(data.index.values)
     pop_sample = [(x,) for x in species]
+
+    eval_func = partial(evaluate, data=data)
 
     if parallel:
         pool = Pool()
@@ -39,7 +47,7 @@ def compute(data, k=2, n=10, p=100, part_size=100, abundance_cutoff=0.001, min_s
 
     for i in range(2, k+1):
 
-        print(f"Computing sets of size {i}...", flush=True)
+        print(f"\nComputing co-occurring species sets of size {i}...", flush=True)
 
         # combine all tuples with one more species (without repetition)
         combinations = (tuple(sorted(set(x)|{y})) for x in pop_sample
@@ -47,7 +55,7 @@ def compute(data, k=2, n=10, p=100, part_size=100, abundance_cutoff=0.001, min_s
         combinations = list(set(combinations))
 
         # compute scores for all combinations
-        scores = map_func(evaluate, combinations)
+        scores = map_func(eval_func, combinations)
         scores = pd.DataFrame(scores, columns=["total", "expected", "p_value"])
         scores["community"] = combinations
         
@@ -63,7 +71,7 @@ def compute(data, k=2, n=10, p=100, part_size=100, abundance_cutoff=0.001, min_s
             print("No significant hits found.", flush=True)
             break
         else:
-            print("Selected: {len(selected)} sets.", flush=True)
+            print(f"Selected: {len(selected)} sets.", flush=True)
 
         top_size = min(n, len(selected))
         pop_size = min(p, len(selected))
@@ -95,6 +103,6 @@ def save_output(results, output_folder, i, part_size):
         k, l = (j+1) % part_size, j // part_size
         if k == 0 or j == len(results) - 1:
             df_k = pd.DataFrame(comms, columns=['community', 'species'])
-            filename = f"{output_folder}/cooccurring_{i}_{l}.tsv"
+            filename = f"{output_folder}/size_{i}_part_{l+1}.tsv"
             df_k.to_csv(filename, sep='\t', index=False, header=False)
             comms = []

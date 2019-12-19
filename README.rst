@@ -1,37 +1,43 @@
-======
+|License| |PyPI version|
+
 HiOrCo
 ======
 
+Computing **Hi**\ gher-\ **Or**\ der **Co**-occurrence patterns in
+microbial samples.
 
-.. image:: https://img.shields.io/pypi/v/hiorco.svg
-        :target: https://pypi.python.org/pypi/hiorco
+Installation
+~~~~~~~~~~~~
 
-.. image:: https://img.shields.io/travis/cdanielmachado/hiorco.svg
-        :target: https://travis-ci.org/cdanielmachado/hiorco
+Can be easily installed using **pip**:
 
-.. image:: https://readthedocs.org/projects/hiorco/badge/?version=latest
-        :target: https://hiorco.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+::
 
+   pip install hiorco
 
+Usage
+~~~~~
 
+As simple as:
 
-Higher-Order Co-occurrence
+::
 
+   hiorco samples.tsv
 
-* Free software: Apache Software License 2.0
-* Documentation: https://hiorco.readthedocs.io.
+You can download our example here:
+`samples.tsv <https://github.com/cdanielmachado/HiOrCo/blob/master/example/samples.tsv>`__,
+and check the documentation for more options and details:
 
+::
 
-Features
---------
-
-* TODO
+   hiorco -h
 
 Credits
--------
+~~~~~~~
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+Daniel Machado, European Molecular Biology Laboratory (EMBL), 2019
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. |License| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
+   :target: https://opensource.org/licenses/Apache-2.0
+.. |PyPI version| image:: https://badge.fury.io/py/hiorco.svg
+   :target: https://badge.fury.io/py/hiorco
