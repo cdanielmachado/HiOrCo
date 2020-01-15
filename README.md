@@ -1,7 +1,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![PyPI version](https://badge.fury.io/py/hiorco.svg)](https://badge.fury.io/py/hiorco)
 
-# HiOrCo
+![HiOrCo](logo_300px.png)
+
 
 Computing **Hi**gher-**Or**der **Co**-occurrence patterns in microbial samples.
 
