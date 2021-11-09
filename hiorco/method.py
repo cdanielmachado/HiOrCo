@@ -106,3 +106,4 @@ def save_output(results, output_folder, i, part_size):
             filename = f"{output_folder}/size_{i}_part_{l+1}.tsv"
             df_k.to_csv(filename, sep='\t', index=False, header=False)
             comms = []
+            scores.to_csv(filename)
